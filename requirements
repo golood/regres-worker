@@ -1,0 +1,7 @@
+numpy           1.18.3
+pip             20.1
+pkg-resources   0.0.0
+psycopg2-binary 2.8.5
+PuLP            2.1
+pyparsing       2.4.7
+setuptools      46.1.3
