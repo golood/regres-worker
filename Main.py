@@ -56,10 +56,13 @@ def main():
             queue = Queue()
 
             # Запускаем потом и очередь
+            threds = []
             for i in range(2):
                 t = MyThread(queue)
                 t.setDaemon(True)
                 t.start()
+                threds.append(t)
+
 
             # Даем очереди нужные нам ссылки для скачивания
             for task in objects:
@@ -67,6 +70,10 @@ def main():
 
             # Ждем завершения работы очереди
             queue.join()
+
+            for item in threds:
+                item.stop()
+
             # endTime = datetime.datetime.now()
             # print(f'Время решения задач: {(endTime-startTime).total_seconds()}')
             # for task in objects:
@@ -103,6 +110,7 @@ class MyThread(threading.Thread):
     def __init__(self, queue):
         """Инициализация потока"""
         threading.Thread.__init__(self)
+        self._stop_event = threading.Event()
         self.queue = queue
 
     def run(self):
@@ -116,6 +124,13 @@ class MyThread(threading.Thread):
 
             # Отправляем сигнал о том, что задача завершена
             self.queue.task_done()
+
+    def stop(self):
+        self._stop_event.set()
+
+    def stopped(self):
+        return self._stop_event.is_set()
+
 
 if __name__ == "__main__":
     main()
