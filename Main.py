@@ -1,3 +1,7 @@
+import datetime
+import threading
+from queue import Queue
+
 from DBModule import ServiceRepo, ResultRepo
 from Models import TaskDTO
 import utill
@@ -48,8 +52,25 @@ def main():
     while True:
         if isOpenTask():
             objects, ids, task_id, parcent = getPageTask()
+            # startTime = datetime.datetime.now()
+            queue = Queue()
+
+            # Запускаем потом и очередь
+            for i in range(2):
+                t = MyThread(queue)
+                t.setDaemon(True)
+                t.start()
+
+            # Даем очереди нужные нам ссылки для скачивания
             for task in objects:
-                task.run()
+                queue.put(task)
+
+            # Ждем завершения работы очереди
+            queue.join()
+            # endTime = datetime.datetime.now()
+            # print(f'Время решения задач: {(endTime-startTime).total_seconds()}')
+            # for task in objects:
+            #     task.run()
 
             res = getResult(objects)
 
@@ -77,6 +98,24 @@ def main():
         else:
             time.sleep(10)
             repo.updateLastActive()
+
+class MyThread(threading.Thread):
+    def __init__(self, queue):
+        """Инициализация потока"""
+        threading.Thread.__init__(self)
+        self.queue = queue
+
+    def run(self):
+        """Запуск потока"""
+        while True:
+            # Получаем задачу ЛП из очереди
+            task = self.queue.get()
+
+            # Решаем задачу
+            task.run()
+
+            # Отправляем сигнал о том, что задача завершена
+            self.queue.task_done()
 
 if __name__ == "__main__":
     main()
