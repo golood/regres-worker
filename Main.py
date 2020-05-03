@@ -72,7 +72,7 @@ def main():
             queue.join()
 
             for item in threds:
-                item.stop()
+                item.join()
 
             # endTime = datetime.datetime.now()
             # print(f'Время решения задач: {(endTime-startTime).total_seconds()}')
@@ -110,7 +110,6 @@ class MyThread(threading.Thread):
     def __init__(self, queue):
         """Инициализация потока"""
         threading.Thread.__init__(self)
-        self._stop_event = threading.Event()
         self.queue = queue
 
     def run(self):
@@ -124,12 +123,6 @@ class MyThread(threading.Thread):
 
             # Отправляем сигнал о том, что задача завершена
             self.queue.task_done()
-
-    def stop(self):
-        self._stop_event.set()
-
-    def stopped(self):
-        return self._stop_event.is_set()
 
 
 if __name__ == "__main__":
