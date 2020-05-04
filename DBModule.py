@@ -425,7 +425,7 @@ class WorkerRepo:
 
             update = 'UPDATE worker SET count = %s WHERE task_id = %s'
 
-            values = (float(count_db) + float(count), taskId)
+            values = (count_db + count, taskId)
 
             cursor.execute(update, values)
         conn.close()
