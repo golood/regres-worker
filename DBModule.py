@@ -1,4 +1,5 @@
 import datetime
+import time
 import psycopg2
 from psycopg2.extras import execute_values
 
@@ -11,12 +12,18 @@ def getConnection():
     :return: соединение с БД.
     '''
 
-    conn = psycopg2.connect(dbname=config.database,
-                            user=config.user,
-                            password=config.password,
-                            host=config.host,
-                            port=config.port)
-    return conn
+    while True:
+        try:
+            conn = psycopg2.connect(dbname=config.database,
+                                    user=config.user,
+                                    password=config.password,
+                                    host=config.host,
+                                    port=config.port)
+
+            return conn
+
+        except psycopg2.OperationalError:
+            time.sleep(5)
 
 
 class ServiceRepo:
