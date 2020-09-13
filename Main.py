@@ -14,6 +14,7 @@ def isOpenTask():
     repo = ServiceRepo()
     return repo.isOpenTask()
 
+
 def getPageTask():
     '''
     Получает набор открытых задач из БД. Десереализует данные.
@@ -35,6 +36,7 @@ def getPageTask():
 
     return objects, ids, task_id, parcent
 
+
 def getResult(objects):
     resaults = []
 
@@ -42,6 +44,7 @@ def getResult(objects):
         resaults.append(task.getResaults())
 
     return resaults
+
 
 def main():
     repo = ServiceRepo()
@@ -78,6 +81,41 @@ def main():
         else:
             time.sleep(10)
             repo.updateLastActive()
+
+
+def test(data):
+    tasks = []
+
+    for item in data['list_h']:
+        tasks.append(TaskDTO(
+            {
+                'x': data['x'],
+                'y': data['y'],
+                'h1': item['h1'],
+                'h2': item['h2']
+            }))
+    del data
+
+    for task in tasks:
+        task.run()
+
+    res = getResult(tasks)
+
+    del tasks
+
+    result = []
+    for item in res:
+        line = [utill.format_numbers(item[0][1][0]),
+                utill.format_numbers(item[0][1][1]),
+                utill.format_number(item[0][1][2]),
+                utill.format_number(item[1]),
+                utill.appendOneForNumber(item[2]),
+                utill.appendOneForNumber(item[3])]
+        result.append(line)
+
+    del res
+
+    return result
 
 
 if __name__ == "__main__":
