@@ -1,11 +1,10 @@
+import json
+
 from flask import Flask, request, abort, jsonify
+
 import Main
-import json
 
-import json
 app = Flask(__name__)
-
-tasks = []
 
 
 @app.route('/')
@@ -24,7 +23,7 @@ def api():
         'list_h': json.loads(request.json['list_h'])
     }
 
-    answer = Main.test(task)
+    answer = Main.start_solution(task)
 
     return jsonify({'answer': answer}), 201
 

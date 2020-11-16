@@ -1,25 +1,19 @@
-import json
 from regres.regr import MCO
 
 
 class TaskDTO:
-    def __init__(self, methodData):
-        self.method = self._decodeMethod(methodData)
+    def __init__(self, method_data):
+        self.method = self._decode_method(method_data)
 
-    def _decodeMethod(self, methodData):
-        return MCO(methodData['x'], methodData['y'], methodData['h1'], methodData['h2'])
+    @staticmethod
+    def _decode_method(method_data):
+        return MCO(method_data['x'], method_data['y'], method_data['h1'], method_data['h2'])
 
     def run(self):
         self.method.run()
 
-    def getResaults(self):
-        resaults = []
-
-        resaults.append(self.method.getResaul())
-        resaults.append(self.method.getSmeshenir())
-        resaults.append(self.method.h1)
-        resaults.append(self.method.h2)
-
-        return resaults
-
-
+    def get_results(self):
+        return [self.method.getResaul(),
+                self.method.getSmeshenir(),
+                self.method.h1,
+                self.method.h2]
