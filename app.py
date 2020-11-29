@@ -7,11 +7,6 @@ import Main
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
-
 @app.route('/api', methods=['POST'])
 def api():
     if not request.json:
@@ -25,7 +20,7 @@ def api():
 
     answer = Main.start_solution(task)
 
-    return jsonify({'answer': answer}), 201
+    return jsonify({'id': task['id'], 'answer': answer}), 201
 
 
 if __name__ == '__main__':
