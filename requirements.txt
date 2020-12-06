@@ -11,3 +11,4 @@ psycopg2-binary==2.8.6
 PuLP==2.3
 pyparsing==2.4.7
 Werkzeug==1.0.1
+waitress==1.4.4

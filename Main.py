@@ -20,7 +20,8 @@ def start_solution(data):
                 'x': data['x'],
                 'y': data['y'],
                 'h1': item['h1'],
-                'h2': item['h2']
+                'h2': item['h2'],
+                'freeChlen': data['freeChlen']
             }))
     del data
 
