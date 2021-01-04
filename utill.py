@@ -16,17 +16,17 @@ def get_value_checkbox(value):
 
 def format_numbers(values):
     """
-    Форматирует массив строк к вещественным числам.
-    :param values: массив строк.
+    Форматирует массив чисел к вещественным числам с двумя знаками после запятой.
+    :param values: массив чисел.
     :return: массив вещественных чисел.
     """
-    return list(map(lambda x: float('{:.2f}'.format(x)), values))
+    return list(map(lambda x: float('{:.2f}'.format(float(x))), values))
 
 
 def format_number(value):
     """
-    Форматирует строку к вещественному числу.
-    :param value: строка.
+    Форматирует число к вещественному числу с точностью до двух знаков.
+    :param value: число.
     :return: вещественное число.
     """
 
@@ -42,7 +42,7 @@ def format_to_int(values):
     :return: массив целых чисел.
     """
 
-    return list(map(lambda x: int(x), values))
+    return list(map(lambda x: int(float(x)), values))
 
 
 def append_one_for_number(array):
@@ -54,15 +54,3 @@ def append_one_for_number(array):
     """
 
     return list(map(lambda x: x+1, array))
-
-
-def generate_session_id(s):
-    """
-    Генератор идентификатора сессии.
-    :param s: данные сессии.
-    :return: хеш код сессии.
-    """
-
-    hash_object = hashlib.md5(s.encode())
-
-    return hash_object.hexdigest()

@@ -86,6 +86,16 @@ class Method:
             a -= self.a[i]
         return a
 
+    def __eq__(self, other):
+        return (isinstance(other, Method) and
+                (self.x == other.x).all() and
+                (self.y == other.y).all() and
+                self.a == other.a and
+                self.eps == other.eps and
+                self.e == other.e and
+                self.nz == other.nz)
+
+
 class MNK(Method):
 
     def __init__(self, x, y):
@@ -166,19 +176,25 @@ class MCO(Method):
     def getResaul(self):
         return 'МСО', super().getResaul()
 
+    def __eq__(self, other):
+        return (super(MCO, self).__eq__(other) and
+                isinstance(other, MCO) and
+                self.h2 == other.h2 and
+                self.h1 == other.h1)
+
 
 class Task:
 
     def __init__(self, tasks, x, y, h1=None, h2=None):
         self.methods = []
-        if (tasks[0]):
-          self.methods.append(MNK(x, y))
-        if (tasks[1]):
-          self.methods.append(MNM(x, y))
-        if (tasks[2]):
-          self.methods.append(MAO(x, y))
-        if (tasks[3]):
-          self.methods.append(MCO(x, y, h1, h2))
+        if tasks[0]:
+            self.methods.append(MNK(x, y))
+        if tasks[1]:
+            self.methods.append(MNM(x, y))
+        if tasks[2]:
+            self.methods.append(MAO(x, y))
+        if tasks[3]:
+            self.methods.append(MCO(x, y, h1, h2))
 
     def run(self):
 

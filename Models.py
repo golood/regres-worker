@@ -25,14 +25,20 @@ class TaskDTO:
         accumulator = 0
         if self.freeChlen == 'True':
             for i in range(1, self.m):
-                accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
-                                / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
+                try:
+                    accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
+                                    / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
+                except ZeroDivisionError:
+                    accumulator += 0
             accumulator *= (1 / self.m)
             accumulator *= 100
         else:
             for i in range(self.m):
-                accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
-                                / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
+                try:
+                    accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
+                                    / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
+                except ZeroDivisionError:
+                    accumulator += 0
             accumulator *= (1 / self.m)
             accumulator *= 100
 
@@ -43,3 +49,13 @@ class TaskDTO:
                 self._calculate_bias_criterion(),
                 self.h1,
                 self.h2]
+
+    def __eq__(self, other):
+        return (isinstance(other, TaskDTO) and
+                self.freeChlen == other.freeChlen and
+                self.h1 == other.h1 and
+                self.h2 == other.h2 and
+                self.m == other.m and
+                self.n == other.n and
+                self.method[0].__eq__(other.method[0]) and
+                self.method[1].__eq__(other.method[1]))
