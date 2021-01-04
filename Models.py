@@ -11,7 +11,6 @@ class TaskDTO:
         self.h2 = method_data['h2']
         self.n = len(method_data['x'])
         self.m = len(method_data['x'][0])
-        self.avg_x = self.__get_avg_x(method_data['x'])
 
     @staticmethod
     def _decode_method(method_data):
@@ -22,33 +21,19 @@ class TaskDTO:
         for item in self.method:
             item.run()
 
-    def __get_avg_x(self, x):
-        avg_x = []
-        if self.freeChlen == 'True':
-            for i in range(1, self.m):
-                accumulator = 0
-                for j in range(self.n):
-                    accumulator += x[j][i]
-                avg_x.append(accumulator / self.n)
-        else:
-            for i in range(self.m):
-                accumulator = 0
-                for j in range(self.n):
-                    accumulator += x[j][i]
-                avg_x.append(accumulator / self.n)
-        return avg_x
-
     def _calculate_bias_criterion(self):
         accumulator = 0
         if self.freeChlen == 'True':
             for i in range(1, self.m):
-                accumulator += (math.fabs(self.method[0].a[i] - self.method[1].a[i]) / self.avg_x[i-1])
-            accumulator /= self.m
+                accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
+                                / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
+            accumulator *= (1 / self.m)
             accumulator *= 100
         else:
             for i in range(self.m):
-                accumulator += (math.fabs(self.method[0].a[i] - self.method[1].a[i]) / self.avg_x[i])
-            accumulator /= self.m
+                accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
+                                / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
+            accumulator *= (1 / self.m)
             accumulator *= 100
 
         return accumulator
