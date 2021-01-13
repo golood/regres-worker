@@ -23,16 +23,17 @@ def format_numbers(values):
     return list(map(lambda x: float('{:.2f}'.format(float(x))), values))
 
 
-def format_number(value):
+def format_number(value, precision=2):
     """
     Форматирует число к вещественному числу с точностью до двух знаков.
     :param value: число.
+    :param precision: точность окрушления.
     :return: вещественное число.
     """
 
     if value == 'Infinity':
         return value
-    return float('{:.2f}'.format(float(value)))
+    return float('{:.{}f}'.format(float(value), precision))
 
 
 def format_to_int(values):

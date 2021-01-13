@@ -37,8 +37,8 @@ def start_solution(data):
         result.append([
             utill.format_numbers(item[0][1][0]),
             utill.format_numbers(item[0][1][1]),
-            utill.format_number(item[0][1][2]),
-            utill.format_number(item[1]),
+            utill.format_number(item[0][1][2], precision=5),
+            utill.format_number(item[1], precision=5),
             utill.append_one_for_number(item[2]),
             utill.append_one_for_number(item[3])
         ])

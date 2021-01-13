@@ -41,6 +41,14 @@ class MyTestCase(unittest.TestCase):
         expr = 'Infinity'
         self.assertEqual(expr, utill.format_number(value))
 
+        value = 0.1234567
+        expr = 0.12346
+        self.assertEqual(expr, utill.format_number(value, 5))
+
+        value = 0.1234567
+        expr = 0.12346
+        self.assertEqual(expr, utill.format_number(value, precision=5))
+
     def test_format_to_int(self):
         values = [0.11, '21.23242', -2.32, 0, '-3', 0.9, '-1.9']
         expr = [0, 21, -2, 0, -3, 0, -1]
