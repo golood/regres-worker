@@ -35,10 +35,10 @@ def start_solution(data):
     result = []
     for item in res:
         result.append([
-            utill.format_numbers(item[0][1][0]),
-            utill.format_numbers(item[0][1][1]),
-            utill.format_number(item[0][1][2], precision=5),
-            utill.format_number(item[1], precision=5),
+            utill.format_numbers(item[0][1][0], flag=True),
+            utill.format_numbers(item[0][1][1], flag=True),
+            utill.format_number(item[0][1][2], validator=utill.find_min_float),
+            utill.format_number(item[1], validator=utill.find_min_float),
             utill.append_one_for_number(item[2]),
             utill.append_one_for_number(item[3])
         ])
