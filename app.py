@@ -25,6 +25,23 @@ def api():
     return jsonify({'id': task['id'], 'answer': answer}), 201
 
 
+@app.route('/mco', methods=['POST'])
+def mco():
+    if not request.json:
+        abort(400)
+    task = {
+        'x': request.json['x'],
+        'y': request.json['y'],
+        'freeChlen': request.json['freeChlen'],
+        'h1': request.json['h1'],
+        'h2': request.json['h2']
+    }
+
+    answer = Main.mco_solution(task)
+
+    return jsonify({'answer': answer}), 200
+
+
 if __name__ == '__main__':
     if config.SPACE == 'dev':
         app.run(host='0.0.0.0')

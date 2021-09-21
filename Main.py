@@ -46,3 +46,19 @@ def start_solution(data):
     del res
 
     return result
+
+
+def mco_solution(data):
+    task = TaskDTO(
+        {
+            'x': data['x'],
+            'y': data['y'],
+            'h1': data['h1'],
+            'h2': data['h2'],
+            'freeChlen': data['freeChlen']
+        }
+    )
+    task.run()
+    result = task.get_results()
+
+    return result
