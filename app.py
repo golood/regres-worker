@@ -16,7 +16,6 @@ def api():
         'id':  json.loads(request.json['index']),
         'x':  json.loads(request.json['x']),
         'y':  json.loads(request.json['y']),
-        'freeChlen': request.json['freeChlen'],
         'list_h': json.loads(request.json['list_h'])
     }
 
@@ -32,7 +31,6 @@ def mco():
     task = {
         'x': request.json['x'],
         'y': request.json['y'],
-        'freeChlen': request.json['freeChlen'],
         'h1': request.json['h1'],
         'h2': request.json['h2']
     }

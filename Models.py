@@ -5,7 +5,6 @@ from regres.regr import MCO
 
 class TaskDTO:
     def __init__(self, method_data):
-        self.freeChlen = method_data['freeChlen']
         self.method = self._decode_method(method_data)
         self.h1 = method_data['h1']
         self.h2 = method_data['h2']
@@ -23,24 +22,14 @@ class TaskDTO:
 
     def _calculate_bias_criterion(self):
         accumulator = 0
-        if self.freeChlen == 'True':
-            for i in range(1, self.m):
-                try:
-                    accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
-                                    / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
-                except ZeroDivisionError:
-                    accumulator += 0
-            accumulator *= (1 / self.m)
-            accumulator *= 100
-        else:
-            for i in range(self.m):
-                try:
-                    accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
-                                    / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
-                except ZeroDivisionError:
-                    accumulator += 0
-            accumulator *= (1 / self.m)
-            accumulator *= 100
+        for i in range(self.m):
+            try:
+                accumulator += math.fabs(self.method[0].a[i] - self.method[1].a[i]) \
+                                / max(math.fabs(self.method[0].a[i]), math.fabs(self.method[1].a[i]))
+            except ZeroDivisionError:
+                accumulator += 0
+        accumulator *= (1 / self.m)
+        accumulator *= 100
 
         return accumulator
 
@@ -52,7 +41,6 @@ class TaskDTO:
 
     def __eq__(self, other):
         return (isinstance(other, TaskDTO) and
-                self.freeChlen == other.freeChlen and
                 self.h1 == other.h1 and
                 self.h2 == other.h2 and
                 self.m == other.m and

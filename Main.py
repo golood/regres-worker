@@ -21,7 +21,6 @@ def start_solution(data):
                 'y': data['y'],
                 'h1': item['h1'],
                 'h2': item['h2'],
-                'freeChlen': data['freeChlen']
             }))
     del data
 
@@ -55,7 +54,6 @@ def mco_solution(data):
             'y': data['y'],
             'h1': data['h1'],
             'h2': data['h2'],
-            'freeChlen': data['freeChlen']
         }
     )
     task.run()
