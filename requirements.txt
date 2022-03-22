@@ -6,7 +6,7 @@ Flask==1.1.2
 itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
-numpy==1.19.1
+numpy==1.21.0
 psycopg2-binary==2.8.6
 PuLP==2.3
 pyparsing==2.4.7
